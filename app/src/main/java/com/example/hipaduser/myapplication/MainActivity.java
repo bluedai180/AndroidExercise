@@ -15,6 +15,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -38,7 +39,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final OkHttpClient client = new OkHttpClient();
+        final OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(100, TimeUnit.SECONDS)
+                .writeTimeout(100, TimeUnit.SECONDS)
+                .readTimeout(100, TimeUnit.SECONDS)
+                .build();
         Request request = new Request.Builder().url("http://lemonade2017.pythonanywhere.com/index").build();
         Call call = client.newCall(request);
         call.enqueue(new Callback() {
