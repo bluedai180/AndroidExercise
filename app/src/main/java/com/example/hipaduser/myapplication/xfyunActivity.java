@@ -40,20 +40,21 @@ public class xfyunActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_xfyun);
+        SpeechUtility.createUtility(this, SpeechConstant.APPID +"=58c6ad01");
         mButton = (Button) findViewById(R.id.btn);
         mResultText = (EditText) findViewById(R.id.et_result);
-        mDialog = new RecognizerDialog(getApplicationContext(), mInitListener);
+        mDialog = new RecognizerDialog(xfyunActivity.this, mInitListener);
         mIat = SpeechRecognizer.createRecognizer(xfyunActivity.this, mInitListener);
-        mDialog.setParameter(SpeechConstant.LANGUAGE, "zh_cn");
-        mDialog.setParameter(SpeechConstant.ACCENT, "mandarin");
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mDialog.setParameter(SpeechConstant.LANGUAGE, "zh_cn");
+                mDialog.setParameter(SpeechConstant.ACCENT, "mandarin");
                 mDialog.setListener(mRecognizerDialogListener);
                 mDialog.show();
             }
         });
-        SpeechUtility.createUtility(this, SpeechConstant.APPID +"=58c6ad01");
+
     }
     private InitListener mInitListener = new InitListener() {
 
